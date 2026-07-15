@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application>
+
+        <activity
+            android:name=".internal.IDtoActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density|smallestScreenSize|fontScale|locale"
+            android:theme="@style/Theme.IDto.Translucent"
+            android:windowSoftInputMode="adjustResize" />
+
+        <provider
+            android:name=".internal.IDtoFileProvider"
+            android:authorities="${applicationId}.idto.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/idto_file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

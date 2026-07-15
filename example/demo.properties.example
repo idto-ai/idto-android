@@ -1,0 +1,13 @@
+# Demo credentials for the IDto Android example app.
+#
+# Copy this file to example/demo.properties (git-ignored) and fill in the trio
+# from IDto onboarding, OR export the matching IDTO_DEMO_* environment variables,
+# OR pass them as Gradle properties (-P). Resolution order:
+#   1. environment variable   2. Gradle property   3. this demo.properties file
+#
+# These are TEST-ONLY. A real app must never embed a client_secret — your backend
+# holds it and returns only a short-lived client_token. See example/README.md.
+
+IDTO_DEMO_CLIENT_ID=
+IDTO_DEMO_CLIENT_SECRET=
+IDTO_DEMO_WORKFLOW_ID=
