@@ -49,36 +49,41 @@ your `workflow_template_id`, and toasts each `onStepComplete` / `onComplete` /
 
 ## Provision your own sandbox client
 
+`DevCredentials` defaults to `https://prod.idto.ai` / `IDtoEnv.PRODUCTION`, so
+the commands below target prod. To use a dev-provisioned client instead, swap
+`prod.idto.ai` for `dev.idto.ai` here **and** set `BASE_URL = "https://dev.idto.ai"`
+/ `ENV = IDtoEnv.DEVELOPMENT` in `DevCredentials.kt`.
+
 ```bash
-# 1) Sign up a dev customer
-curl -s -X POST https://dev.idto.ai/auth/signup \
+# 1) Sign up a customer
+curl -s -X POST https://prod.idto.ai/auth/signup \
   -H 'Content-Type: application/json' \
   -d '{"email":"you@example.com","password":"YourPassw0rd!"}'
 
 # 2) Log in → capture the customer JWT
-curl -s -X POST https://dev.idto.ai/auth/login \
+curl -s -X POST https://prod.idto.ai/auth/login \
   -H 'Content-Type: application/json' \
   -d '{"email":"you@example.com","password":"YourPassw0rd!"}'
 
 # 3) Create a client → capture client_id + client_secret (shown once)
-curl -s -X POST https://dev.idto.ai/customers/create-client \
+curl -s -X POST https://prod.idto.ai/customers/create-client \
   -H "Authorization: Bearer <CUSTOMER_JWT>" \
   -H 'Content-Type: application/json' \
   -d '{"name":"android-example"}'
 
 # 4) Create / pick a workflow_template_id in the dashboard, then put all three
-#    into example/demo.properties (and set env to DEVELOPMENT in DevCredentials).
+#    into example/demo.properties.
 ```
 
 Verify the trio works before running:
 
 ```bash
-TOKEN=$(curl -s -X POST https://dev.idto.ai/auth/sdk/token \
+TOKEN=$(curl -s -X POST https://prod.idto.ai/auth/sdk/token \
   -H 'Content-Type: application/json' \
   -d '{"client_id":"<ID>","client_secret":"<SECRET>"}' \
   | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
 
-curl -s -X POST https://dev.idto.ai/sdk/v2/session/init \
+curl -s -X POST https://prod.idto.ai/sdk/v2/session/init \
   -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
   -d '{"workflow_template_id":"<WORKFLOW>","start_fresh":true}'
 ```
