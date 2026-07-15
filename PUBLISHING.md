@@ -16,22 +16,37 @@ The version and coordinates live in **`sdk/build.gradle.kts`** (the `maven-publi
 Change the version in exactly one place — `sdk/build.gradle.kts` — and nowhere else in
 code.
 
+`group` defaults to `ai.idto` but is overridable with the `-PidtoGroupId=…` Gradle
+property. `jitpack.yml` uses this to publish under `com.github.idto-ai` — the exact
+coordinate JitPack requests — so the served POM and Gradle module metadata are
+self-consistent (no groupId mismatch on the consumer side). The `ai.idto` default is what
+you publish to a controlled Maven repository / GitHub Packages.
+
 ## Release flow
 
 1. **Bump the version** in `sdk/build.gradle.kts` (`version = "X.Y.Z"`).
 2. **Update `CHANGELOG.md`** — move the pending items under a new `## [X.Y.Z]` heading with
    the release date (Keep a Changelog format).
 3. **Commit** the version bump and changelog together.
-4. **Tag** the release and push the tag:
+4. **Tag** the release and push the tag. Tags are the bare version — **no `v`
+   prefix** — because JitPack serves the artifact version verbatim from the tag
+   (`0.1.0` was the first release):
 
    ```
-   git tag vX.Y.Z
-   git push origin vX.Y.Z
+   git tag X.Y.Z
+   git push origin X.Y.Z
    ```
 
 5. **JitPack** picks up the tag automatically. The first request to
    `https://jitpack.io/com/github/idto-ai/idto-android/X.Y.Z/` triggers the build
-   (driven by `jitpack.yml`, which pins JDK 17). No manual upload is needed.
+   (driven by `jitpack.yml`, which pins JDK 17 and runs
+   `./gradlew :sdk:publishToMavenLocal -PidtoGroupId=com.github.idto-ai`). No
+   manual upload is needed. Verify with:
+
+   ```
+   curl -s https://jitpack.io/com/github/idto-ai/idto-android/X.Y.Z/idto-android-X.Y.Z.pom
+   curl -sI https://jitpack.io/com/github/idto-ai/idto-android/X.Y.Z/idto-android-X.Y.Z.aar
+   ```
 6. **Maven repository (optional):** publish the `ai.idto` coordinates to your controlled
    repository — see below.
 
@@ -99,5 +114,6 @@ description, project URL, MIT license, developer, and SCM entries Central requir
 - [ ] Local publish verified (`sdk/build/repo/ai/idto/idto-android/<version>/` has AAR +
       sources jar + POM)
 - [ ] Consumption check resolves `ai.idto:idto-android:<version>`
-- [ ] `git tag vX.Y.Z` pushed (JitPack build)
+- [ ] `git tag X.Y.Z` pushed (no `v` prefix; triggers the JitPack build)
+- [ ] JitPack POM + AAR resolve at `com.github.idto-ai:idto-android:X.Y.Z`
 - [ ] `ai.idto` coordinates published to the controlled Maven repository (if applicable)
