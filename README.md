@@ -548,9 +548,16 @@ into `outcome: not_verified`.
 
 ## IDtoLanding
 
-`IDtoLandingView` is a batteries-included landing screen — header, hero, numbered steps,
-CTA, trust row, footer — that owns the token lifecycle and opens the flow as a native
-bottom sheet. You supply a `workflowTemplateId`, an `IDtoTokenProvider`, and branding.
+`IDtoLandingView` is a batteries-included landing screen — logo header, hero (title +
+subtitle), numbered steps, a primary CTA, and a centered footer — that owns the token
+lifecycle and opens the flow as a native bottom sheet. You supply a `workflowTemplateId`,
+an `IDtoTokenProvider`, and branding.
+
+The default copy reads *"Verify your identity"* over *"A quick, secure {business} KYC
+check — done in under a minute."* — the `{business}` slot is filled with your
+`businessName` (and drops out cleanly when unset) — with three steps: *Confirm your
+details*, *Capture your documents*, *Instant result*. The optional hero note and trust
+row are **blank by default** and render only when you set them through `copy`.
 
 ```kotlin
 import ai.idto.sdk.landing.IDtoLandingConfig
@@ -694,7 +701,7 @@ not the whole session.
 
 - **Never ship `client_secret` in the app.** Issue the short-lived `clientToken` from your
   backend. The example app injects its sandbox secret at build time from a **git-ignored**
-  `demo.properties` (or `IDTO_DEMO_*` env vars) **only** because it talks to a throwaway dev
+  `demo.properties` (or `IDTO_DEMO_*` env vars) **only** because it talks to a throwaway
   sandbox and the `example` module is not published — nothing secret is committed.
 - **Navigation is allow-listed.** The `WebView` only navigates to the `idto.ai` domain
   family, the CDN bucket, and DigiLocker by default. Add your own hosts with
@@ -708,19 +715,20 @@ not the whole session.
 
 ## Example app
 
-The `example` module is a one-tap runnable app. It hosts an `IDtoLandingView`, fetches a
-`clientToken` from the IDto **CredResolve dev sandbox** (`SdkTokenClient` calls
-`POST /auth/sdk/token`), opens a real verification session, and toasts every callback.
-Build and run it on the `idto_pixel` emulator or a device:
+The `example` module is a one-tap runnable app (DriveX-branded landing). It hosts an
+`IDtoLandingView`, fetches a `clientToken` directly from the IDto API (`SdkTokenClient`
+calls `POST /auth/sdk/token`), opens a real verification session, and toasts every
+callback. Build and run it on the `idto_pixel` emulator or a device:
 
 ```
 ./gradlew :example:installDebug
 ```
 
-The sandbox `client_id` / `client_secret` / `workflow_template_id` are injected at build
-time from a **git-ignored** `demo.properties` (or `IDTO_DEMO_*` env vars / Gradle
-properties) and are **test-only** — never ship a `client_secret` in a real app. Setup lives
-in [`example/README.md`](example/README.md); if the trio is blank the app toasts a hint and
+The `client_id` / `client_secret` / `workflow_template_id` trio is injected at build
+time — resolved in order from `IDTO_DEMO_*` env vars, matching Gradle properties, then a
+**git-ignored** `demo.properties` (copy the checked-in `demo.properties.example` template)
+— and is **test-only**; never ship a `client_secret` in a real app. Setup lives in
+[`example/README.md`](example/README.md); if the trio is blank the app toasts a hint and
 the `SmokeTest` skips.
 
 ## Versioning & web-SDK parity

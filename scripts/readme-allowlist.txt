@@ -57,6 +57,8 @@ DevCredentials
 idto_pixel
 # git-ignored file that feeds the example's demo credentials at build time
 demo.properties
+# checked-in template the example's demo.properties is copied from
+demo.properties.example
 # env-var prefix for the example's demo credentials
 IDTO_DEMO_*
 # example setup doc referenced from the root README
