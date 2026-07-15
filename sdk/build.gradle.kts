@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
 }
 
-val idtoGroupId = "ai.idto"
+val idtoGroupId = (findProperty("idtoGroupId") as String?) ?: "ai.idto"
 val idtoArtifactId = "idto-android"
 val idtoVersion = "0.1.0"
 
