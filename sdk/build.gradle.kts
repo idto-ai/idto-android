@@ -6,7 +6,7 @@ plugins {
 
 val idtoGroupId = (findProperty("idtoGroupId") as String?) ?: "ai.idto"
 val idtoArtifactId = "idto-android"
-val idtoVersion = "0.1.0"
+val idtoVersion = "0.1.1"
 
 android {
     namespace = "ai.idto.sdk"
