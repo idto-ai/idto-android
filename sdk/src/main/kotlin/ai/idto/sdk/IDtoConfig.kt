@@ -31,6 +31,7 @@ class IDtoConfig private constructor(
     val phone: String?,
     val startFresh: Boolean?,
     val preVerified: Map<String, Boolean>?,
+    val skippable: List<String>?,
     val accumulatedData: JSONObject?,
     val aadhaarConfig: IDtoAadhaarConfig?,
     val referenceName: String?,
@@ -57,6 +58,7 @@ class IDtoConfig private constructor(
         private var phone: String? = null
         private var startFresh: Boolean? = null
         private var preVerified: Map<String, Boolean>? = null
+        private var skippable: List<String>? = null
         private var accumulatedData: JSONObject? = null
         private var aadhaarConfig: IDtoAadhaarConfig? = null
         private var referenceName: String? = null
@@ -82,6 +84,7 @@ class IDtoConfig private constructor(
         fun phone(v: String) = apply { phone = v }
         fun startFresh(v: Boolean) = apply { startFresh = v }
         fun preVerified(v: Map<String, Boolean>) = apply { preVerified = v }
+        fun skippable(v: List<String>) = apply { skippable = v }
         fun accumulatedData(v: JSONObject) = apply { accumulatedData = v }
         fun aadhaarConfig(v: IDtoAadhaarConfig) = apply { aadhaarConfig = v }
         fun referenceName(v: String) = apply { referenceName = v }
@@ -104,7 +107,7 @@ class IDtoConfig private constructor(
 
         fun build() = IDtoConfig(
             clientToken, workflowTemplateId, sessionToken, merchantUserId, phone, startFresh,
-            preVerified, accumulatedData, aadhaarConfig, referenceName, nameMatchConfig,
+            preVerified, skippable, accumulatedData, aadhaarConfig, referenceName, nameMatchConfig,
             faceMatchReferenceImage, faceMatchConfig, panConfig, businessName, logo, language,
             theme, displayMode, bottomSheet, env, baseUrl, colors, debug, readyTimeoutMs, allowedHosts,
         )

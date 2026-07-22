@@ -43,6 +43,7 @@ class IDtoLandingConfig private constructor(
     val merchantUserId: String?,
     val startFresh: Boolean?,
     val preVerified: Map<String, Boolean>?,
+    val skippable: List<String>?,
     val sessionToken: String?,
     val referenceName: String?,
     val accumulatedData: JSONObject?,
@@ -73,6 +74,7 @@ class IDtoLandingConfig private constructor(
         merchantUserId?.let { builder.merchantUserId(it) }
         startFresh?.let { builder.startFresh(it) }
         preVerified?.let { builder.preVerified(it) }
+        skippable?.let { builder.skippable(it) }
         sessionToken?.let { builder.sessionToken(it) }
         referenceName?.let { builder.referenceName(it) }
         accumulatedData?.let { builder.accumulatedData(it) }
@@ -102,6 +104,7 @@ class IDtoLandingConfig private constructor(
         private var merchantUserId: String? = null
         private var startFresh: Boolean? = null
         private var preVerified: Map<String, Boolean>? = null
+        private var skippable: List<String>? = null
         private var sessionToken: String? = null
         private var referenceName: String? = null
         private var accumulatedData: JSONObject? = null
@@ -130,6 +133,7 @@ class IDtoLandingConfig private constructor(
         fun merchantUserId(v: String) = apply { merchantUserId = v }
         fun startFresh(v: Boolean) = apply { startFresh = v }
         fun preVerified(v: Map<String, Boolean>) = apply { preVerified = v }
+        fun skippable(v: List<String>) = apply { skippable = v }
         fun sessionToken(v: String) = apply { sessionToken = v }
         fun referenceName(v: String) = apply { referenceName = v }
         fun accumulatedData(v: JSONObject) = apply { accumulatedData = v }
@@ -149,7 +153,7 @@ class IDtoLandingConfig private constructor(
 
         fun build() = IDtoLandingConfig(
             workflowTemplateId, tokenProvider, copy, brandColor, logo, logoWidthDp, logoHeightDp,
-            logoUrl, colors, businessName, phone, merchantUserId, startFresh, preVerified, sessionToken,
+            logoUrl, colors, businessName, phone, merchantUserId, startFresh, preVerified, skippable, sessionToken,
             referenceName, accumulatedData, aadhaarConfig, faceMatchReferenceImage, faceMatchConfig,
             panConfig, nameMatchConfig, language, theme, env, baseUrl, bottomSheet, allowedHosts,
             debug, readyTimeoutMs,

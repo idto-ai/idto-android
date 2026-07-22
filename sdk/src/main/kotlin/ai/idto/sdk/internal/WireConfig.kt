@@ -18,6 +18,7 @@ object WireConfig {
         putOpt("phone", config.phone)
         putOpt("start_fresh", config.startFresh)
         config.preVerified?.let { put("pre_verified", JSONObject(it as Map<*, *>)) }
+        config.skippable?.let { put("skippable", org.json.JSONArray(it)) }
         putOpt("accumulated_data", config.accumulatedData)
         putOpt("aadhaarConfig", config.aadhaarConfig?.toJson())
         putOpt("reference_name", config.referenceName)
