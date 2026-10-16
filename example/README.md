@@ -55,10 +55,8 @@ the commands below target prod. To use a dev-provisioned client instead, swap
 / `ENV = IDtoEnv.DEVELOPMENT` in `DevCredentials.kt`.
 
 ```bash
-# 1) Sign up a customer
-curl -s -X POST https://prod.idto.ai/auth/signup \
-  -H 'Content-Type: application/json' \
-  -d '{"email":"you@example.com","password":"YourPassw0rd!"}'
+# 1) Sign up at https://dashboard.idto.ai with your email and a password (dev: the dev dashboard).
+#    Google sign-up accounts have no password, so step 2 needs an email and password account.
 
 # 2) Log in → capture the customer JWT
 curl -s -X POST https://prod.idto.ai/auth/login \
